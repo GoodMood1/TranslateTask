@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MvcIntro.Models.Entities.Blog>
+
+@{
+    ViewBag.Title = "SearchResults";
+}
+
+<h2>SearchResults</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogDateTime)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BlogContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BlogDateTime)
+        </td>
+        <td>
+            @Html.ActionLink(
+                    linkText: "Comment", 
+                    actionName: "Comments", 
+                    controllerName: "Comments", 
+                    routeValues: new { blogID = item.BlogID },
+                    htmlAttributes: null) 
+        </td>
+    </tr>
+}
+
+</table>

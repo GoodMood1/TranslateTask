@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MvcIntro.Models.Entities.Comment>
+
+@using MvcIntro.Models.CustomUser;
+
+@if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+<p>
+    @* TODO: Remake as popup window *@
+    @Html.ActionLink("Comment", "Create", "Comments", null, new { @class = "btn btn-success" })
+</p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CommentContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CommentDateTime)
+        </th>
+        <th>
+            User:
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommentContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommentDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                if ((HttpContext.Current.User as CustomUser).UserID == item.User.UserID)
+                {
+                    @* TODO: Remake as popup windows *@
+                    @Html.ActionLink("Edit", "Edit", new { commentID = item.CommentID }, new { @class = "btn btn-info" });
+                    @Html.Raw(" | ");
+                    @Html.ActionLink("Delete", "Delete", new { commentID = item.CommentID }, new { @class = "btn btn-danger" });
+                }
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts
+{
+
+}

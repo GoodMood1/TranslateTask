@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBEntitiesStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="DBEntities.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Blogs">
+      <EntityTypeMapping TypeName="DBEntities.Blog">
+        <MappingFragment StoreEntitySet="Blogs">
+          <ScalarProperty Name="fk_UserID" ColumnName="fk_UserID" />
+          <ScalarProperty Name="BlogDateTime" ColumnName="BlogDateTime" />
+          <ScalarProperty Name="BlogContent" ColumnName="BlogContent" />
+          <ScalarProperty Name="BlogID" ColumnName="BlogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="DBEntities.Comment">
+        <MappingFragment StoreEntitySet="Comments">
+          <ScalarProperty Name="fk_BlogID" ColumnName="fk_BlogID" />
+          <ScalarProperty Name="fk_UserID" ColumnName="fk_UserID" />
+          <ScalarProperty Name="CommentDateTime" ColumnName="CommentDateTime" />
+          <ScalarProperty Name="CommentContent" ColumnName="CommentContent" />
+          <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

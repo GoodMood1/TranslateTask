@@ -1,0 +1,121 @@
+﻿@model MvcIntro.Models.Entities.User
+
+@{
+    ViewBag.Title = "User profile";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            Welcome: @HttpContext.Current.User.Identity.Name
+        </dd>
+    </dl>
+
+    @{ Html.RenderPartial("ShowError"); }
+
+    @{ Html.RenderAction("UserBlogs", "Blogs"); }
+
+</div>
+
+@section scripts{
+
+    <script>
+
+        const blogsTable = $('.blogsTable')[0];
+
+        $(".deleteBlogBtn").click(function () {
+
+            const blogID = this.dataset.blogid;
+            const buttonPointer = this;
+
+            $.get(
+                "/blogs/DeleteJS",
+                { blogID: blogID },
+            ).done(function (data) {
+
+                if (data) {
+
+                    const numberOfDeletedBlogs = parseInt(data);
+
+                    if (numberOfDeletedBlogs > 0) {
+                        $(buttonPointer).closest("tr")[0].remove();
+                    }
+                    else {
+                        //TODO: Show error
+                    }
+                }
+
+            });
+
+        });
+
+        $(".editBlogBtn").click(function () {
+
+            const blogID = this.dataset.blogid;
+
+            $.get(
+                "/blogs/EditJS",
+                { blogID: blogID },
+            ).done(function (data) {
+
+                if (data) {
+
+                    console.dir(data);
+
+                    $('#blogEditContent').val(data.BlogContent);
+                    $('#blogEditId').val(data.BlogID);
+
+                    $('#editBlog').modal('show');
+
+                }
+            });
+
+        });
+
+        $("#btnEditSaveBlog").click(function () {
+
+            const blogID = $('#blogEditId').val();
+            const updatedBlogContent = $('#blogEditContent').val();
+
+            $.ajax({
+
+                url: '/blogs/SaveUpdatedJS',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify({ blogID: blogID, BlogContent: updatedBlogContent }),
+                type: 'POST',
+                success: function (data) { },
+                error: function (data) { }
+
+            });
+
+        });
+
+    </script>
+
+}
+
+<div class="modal" id="editBlog" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit blog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="width: 100%">
+                <textarea id="blogEditContent" style="width: 100%; height: 100%;"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnEditSaveBlog">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="blogEditId" />
+</div>

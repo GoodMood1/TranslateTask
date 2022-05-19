@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = @MvcIntro.Resources.Views.Home.Index.Title;
+}
+
+@Html.RouteLink("3 Params route", "3ParamsRoute", new { userID = 1, blogID = 2, commentID = 3 })
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">@MvcIntro.Resources.Views.Home.Index.AspNetFramework</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@MvcIntro.Resources.Views.Home.Index.GetStart</h2>
+        <p>
+            @MvcIntro.Resources.Views.Home.Index.descriptionASP
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">@MvcIntro.Resources.Views.Home.Index.MoreInfo &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>@MvcIntro.Resources.Views.Home.Index.Getmorelib</h2>
+        <p>@MvcIntro.Resources.Views.Home.Index.descriptionlib</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">@MvcIntro.Resources.Views.Home.Index.MoreInfo &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>@MvcIntro.Resources.Views.Home.Index.webhosting</h2>
+        <p>@MvcIntro.Resources.Views.Home.Index.descriptionwebhosting</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">@MvcIntro.Resources.Views.Home.Index.MoreInfo &raquo;</a></p>
+    </div>
+</div>

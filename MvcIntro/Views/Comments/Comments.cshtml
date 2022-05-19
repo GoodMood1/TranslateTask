@@ -1,0 +1,31 @@
+﻿@model MvcIntro.Models.Entities.Blog
+
+@{
+    ViewBag.Title = "Comments";
+}
+
+<h3>Blog content:</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BlogDateTime)
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.BlogContent)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.BlogDateTime)
+        </td>
+    </tr>
+
+</table>
+
+<h3>Blog Comments</h3>
+
+@{ Html.RenderAction("BlogComments", "Comments", new { blodID = Model.BlogID }); }

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Search form</h3>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+
+        <div>
+            @Html.Label("Search:", new { @for = "SearchString" })
+            @Html.TextBox("SearchString")
+            <input type="submit" value="Do search" class="btn btn-success" />
+        </div>
+    </div>
+}
+

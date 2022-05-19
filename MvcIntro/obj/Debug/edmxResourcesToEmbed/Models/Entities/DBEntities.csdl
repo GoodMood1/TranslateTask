@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordHash" Type="Binary" MaxLength="64" FixedLength="false" Nullable="false" />
+    <NavigationProperty Name="Blogs" Relationship="DBEntities.FK_Blogs_Users" FromRole="User" ToRole="Blog" />
+    <NavigationProperty Name="Comments" Relationship="DBEntities.FK_Comments_Users" FromRole="User" ToRole="Comment" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Blogs" EntityType="DBEntities.Blog" />
+    <AssociationSet Name="FK_Blogs_Users" Association="DBEntities.FK_Blogs_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Blog" EntitySet="Blogs" />
+    </AssociationSet>
+    <EntitySet Name="Comments" EntityType="DBEntities.Comment" />
+    <AssociationSet Name="FK_Comments_Blogs" Association="DBEntities.FK_Comments_Blogs">
+      <End Role="Blog" EntitySet="Blogs" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_Users" Association="DBEntities.FK_Comments_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Blog">
+    <Key>
+      <PropertyRef Name="BlogID" />
+    </Key>
+    <Property Name="BlogID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BlogContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BlogDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fk_UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="DBEntities.FK_Blogs_Users" FromRole="Blog" ToRole="User" />
+    <NavigationProperty Name="Comments" Relationship="DBEntities.FK_Comments_Blogs" FromRole="Blog" ToRole="Comment" />
+  </EntityType>
+  <Association Name="FK_Blogs_Users">
+    <End Type="DBEntities.User" Role="User" Multiplicity="1" />
+    <End Type="DBEntities.Blog" Role="Blog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Blog">
+        <PropertyRef Name="fk_UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="CommentID" />
+    </Key>
+    <Property Name="CommentID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CommentContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CommentDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="fk_UserID" Type="Int32" Nullable="false" />
+    <Property Name="fk_BlogID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Blog" Relationship="DBEntities.FK_Comments_Blogs" FromRole="Comment" ToRole="Blog" />
+    <NavigationProperty Name="User" Relationship="DBEntities.FK_Comments_Users" FromRole="Comment" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Comments_Blogs">
+    <End Type="DBEntities.Blog" Role="Blog" Multiplicity="1" />
+    <End Type="DBEntities.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Blog">
+        <PropertyRef Name="BlogID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="fk_BlogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_Users">
+    <End Type="DBEntities.User" Role="User" Multiplicity="1" />
+    <End Type="DBEntities.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="fk_UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

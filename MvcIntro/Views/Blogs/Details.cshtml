@@ -1,0 +1,40 @@
+﻿@model MvcIntro.Models.Entities.Blog
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Blog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BlogID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlogID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BlogContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlogContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BlogDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlogDateTime)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Account")
+</p>
